@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<config>
+    <modules>
+        <Snowdog_FirstItemFree>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Snowdog_FirstItemFree>
+    </modules>
+</config>
