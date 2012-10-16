@@ -25,16 +25,20 @@ class Snowdog_FirstItemFree_Model_Observer {
 
 		$base = 0;
 		$total = 0;
+		$scale = (double)$rule->getDiscountAmount()/100.0;
+
+		if($scale > 1) $scale = 1;
+		if($scale < 0) $scale = 0;
 
 		if ($this->appliedCounter <= 0)
 			return;
 		if ($item->getQty() > $this->appliedCounter) {
-			$base += $item->getBasePrice() * $this->appliedCounter;
-			$total += $item->getPriceInclTax() * $this->appliedCounter;
+			$base += $item->getBasePrice() * $this->appliedCounter * $scale;
+			$total += $item->getPriceInclTax() * $this->appliedCounter * $scale;
 			$this->appliedCounter = 0;
 		} else {
-			$base += $item->getBasePrice() * $item->getQty();
-			$total += $item->getPriceInclTax() * $item->getQty();
+			$base += $item->getBasePrice() * $item->getQty() * $scale;
+			$total += $item->getPriceInclTax() * $item->getQty() * $scale;
 			$this->appliedCounter -= $item->getQty();
 		}
 
@@ -51,7 +55,7 @@ class Snowdog_FirstItemFree_Model_Observer {
 		/* @var $actionField Varien_Data_Form_Element_Select */
 		$actions = $actionField->getValues();
 		$actions[] = array(
-			'label' => Mage::helper("snowfirstitemfree")->__("First items are free"),
+			'label' => Mage::helper("snowfirstitemfree")->__("First n items discounted by percent"),
 			'value' => self::FIRST_ITEM_FREE_ACTION,
 		);
 		$actionField->setValues($actions);
