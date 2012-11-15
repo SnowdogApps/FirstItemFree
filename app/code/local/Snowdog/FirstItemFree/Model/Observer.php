@@ -19,6 +19,9 @@ class Snowdog_FirstItemFree_Model_Observer {
 		$qty = $event->getQty();
 		$result = $event->getResult();
 
+		if($rule->getSimpleAction() != self::FIRST_ITEM_FREE_ACTION)
+			return;
+
 		if ($this->appliedCounter === false) {
 			$this->appliedCounter = $rule->getDiscountQty();
 		}
